@@ -30,6 +30,7 @@ const substitutionModule = (function () {
     return result;
   }
 
+  
   return {
     substitution,
   };

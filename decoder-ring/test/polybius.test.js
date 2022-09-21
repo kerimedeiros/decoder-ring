@@ -1,65 +1,53 @@
-// Write your tests here!
-
 const { expect } = require("chai");
 const { polybius } = require("../src/polybius");
 
-describe("polybius() submission tests", () => {
-  describe("encoding a message", () => {
+describe("polybius function",() => {
+//Test encode and decode functionality
     it("should encode a message by translating each letter to number pairs", () => {
-      const message = "message";
-      const actual = polybius(message);
-      const expected = "23513434112251";
-
-      expect(actual).to.equal(expected);
+      const actual = polybius("thinkful"); 
+      const expected = "4432423352125413";
+      expect(actual).to.eql(expected);
     });
 
-    it("should translate both 'i' and 'j' to 42", () => {
-      const message = "jiggle";
-      const actual = polybius(message);
-      const expected = "424222221351";
-
+    it("should decode a message by translating each number pair into a letter", () => {
+      const actual = polybius('23513434112251', false);
+      const expected = "message";
       expect(actual).to.equal(expected);
     });
-
-    it("should leave spaces as is", () => {
-      const message = "my message";
-      const actual = polybius(message);
-      const expected = "2345 23513434112251";
-
-      expect(actual).to.equal(expected);
+//Test character validation checks
+    it("should ignore capital letters", () => {
+      const actual = polybius("Hello world"); 
+      const expected = "3251131343 2543241341";
+     expect(actual).to.eql(expected);
     });
+
+    it("should maintain spaces when encoding", () => {
+      const actual = polybius("hello world"); 
+      const expected = "3251131343 2543241341";
+      expect(actual).to.eql(expected);
+    });
+
+    it("should maintain spaces when decoding", () => {
+      const actual = polybius("3251131343 2543241341", false); 
+      const expected = "hello world";
+      expect(actual).to.eql(expected);
+   });
+ 
+   it("should return false if the number of characters in the string is odd without space present", () => {
+    const actual = polybius("44324233521254134", false);
+    expect(actual).to.be.false;
   });
 
-  describe("decoding a message", () => {
-    it("should decode a message by translating each pair of numbers into a letter", () => {
-      const message = "23513434112251";
-      const actual = polybius(message, false);
-      const expected = "message";
+  it("should translate 42 to i/j when decoding", () => {
+    const actual = polybius("4432423352125413", false); 
+    const expected = "th(i/j)nkful";
+    expect(actual).to.eql(expected);
+ });
 
-      expect(actual).to.equal(expected);
-    });
-
-    it("should translate 42 to both 'i' and 'j'", () => {
-      const message = "424222221351";
-      const actual = polybius(message, false);
-
-      expect(actual).to.include("i");
-      expect(actual).to.include("j");
-    });
-
-    it("should leave spaces as is", () => {
-      const message = "2345 23513434112251";
-      const actual = polybius(message, false);
-      const expected = "my message";
-
-      expect(actual).to.equal(expected);
-    });
-
-    it("should return false if the length of all numbers is odd", () => {
-      const message = "2345 235134341122514";
-      const actual = polybius(message, false);
-
-      expect(actual).to.be.false;
-    });
+  it("should translate i and j to 42 when encoding", () => {
+    const actual = polybius("jumping"); 
+    const expected = "42542353423322";
+    expect(actual).to.eql(expected);
   });
 });
+

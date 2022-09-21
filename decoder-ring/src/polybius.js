@@ -48,6 +48,7 @@ const polybiusModule = (function () {
       22: "g",
       32: "h",
       42: "(i/j)",
+      42: "(i/j)",
       52: "k",
       13: "l",
       23: "m",
@@ -81,9 +82,12 @@ const polybiusModule = (function () {
         }).join("");
     }
   }
+  
   return {
     polybius,
   };
 })();
+
+
 
 module.exports = { polybius: polybiusModule.polybius };
